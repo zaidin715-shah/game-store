@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#050807">
+<title>Game Store</title>
+<style>
+:root{--bg:#050807;--panel:#0d1511;--panel2:#101d16;--green:#43ff83;--green2:#18c964;--white:#f4fff7;--muted:#9bb0a2;--line:rgba(67,255,131,.19)}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:radial-gradient(circle at 80% -10%,#12341f 0,transparent 34%),var(--bg);color:var(--white);font-family:Arial,Helvetica,sans-serif}
+header{position:sticky;top:0;z-index:5;background:rgba(5,8,7,.91);backdrop-filter:blur(14px);border-bottom:1px solid var(--line)}
+.nav{max-width:1160px;margin:auto;padding:13px 20px;display:flex;align-items:center;justify-content:space-between;gap:16px}
+.brand{display:flex;align-items:center;gap:11px;font-weight:900;font-size:20px;letter-spacing:.3px}
+.logo{width:43px;height:43px;border:2px solid var(--green);border-radius:13px;display:grid;place-items:center;font-size:21px;font-weight:1000;box-shadow:0 0 18px #43ff8330}
+.logo span:first-child{color:var(--green)}.logo span:last-child{color:white;margin-left:-3px}
+.nav small{color:var(--muted);font-weight:600}
+.hero{max-width:1160px;margin:30px auto 22px;padding:32px 20px 24px}
+.hero-box{border:1px solid var(--line);border-radius:25px;padding:34px 30px;background:linear-gradient(120deg,#0c1d13 0%,#09100c 58%,#102719 100%);position:relative;overflow:hidden}
+.hero-box:after{content:"GS";position:absolute;right:3%;top:-50px;font-size:210px;font-weight:1000;color:#43ff8309;pointer-events:none}
+.tag{display:inline-block;color:var(--green);border:1px solid var(--line);border-radius:30px;padding:7px 12px;font-size:11px;font-weight:800;letter-spacing:1.6px}
+h1{font-size:clamp(34px,6vw,58px);line-height:1.02;margin:18px 0 12px;letter-spacing:-1.5px}
+h1 em{font-style:normal;color:var(--green)}
+.hero p{max-width:570px;color:var(--muted);line-height:1.6;margin:0 0 22px}
+.actions{display:flex;flex-wrap:wrap;gap:11px}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;text-decoration:none;border:0;border-radius:12px;padding:13px 18px;font-weight:900;cursor:pointer;transition:.2s}
+.btn:hover{transform:translateY(-2px);filter:brightness(1.1)}
+.primary{background:var(--green);color:#041108;box-shadow:0 8px 25px #43ff8324}
+.secondary{background:#ffffff0b;color:var(--white);border:1px solid var(--line)}
+main{max-width:1160px;margin:auto;padding:0 20px 60px}
+.section-head{display:flex;align-items:end;justify-content:space-between;gap:16px;margin:14px 0 18px}
+h2{font-size:25px;margin:0 0 6px}.section-head p{margin:0;color:var(--muted);font-size:13px}
+.controls{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:20px}
+.search{flex:1;min-width:210px;background:var(--panel);border:1px solid var(--line);border-radius:12px;color:white;padding:14px 15px;outline:none;font-size:14px}
+.search:focus{border-color:var(--green)}
+select{background:var(--panel);border:1px solid var(--line);border-radius:12px;color:white;padding:0 13px;min-height:46px}
+.grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:16px}
+.card{background:linear-gradient(160deg,#111d16,#0a100c);border:1px solid var(--line);border-radius:18px;overflow:hidden;min-width:0;transition:.22s}
+.card:hover{transform:translateY(-4px);border-color:#43ff8370;box-shadow:0 12px 30px #0008}
+.cover{height:150px;display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden;background:radial-gradient(circle at 50% 40%,#245d37,#0b1710 70%)}
+.cover:before{content:"";position:absolute;width:190px;height:190px;border:1px solid #ffffff18;border-radius:50%;box-shadow:0 0 0 18px #ffffff08,0 0 0 38px #ffffff05}
+.cover b{position:relative;font-size:28px;font-weight:1000;text-align:center;line-height:1.05;letter-spacing:1px;text-shadow:0 3px 18px #000}
+.cover small{display:block;font-size:10px;letter-spacing:3px;color:var(--green);margin-top:8px}
+.card-body{padding:15px}
+.card h3{margin:0 0 6px;font-size:16px}
+.meta{color:var(--muted);font-size:11px;margin-bottom:13px}
+.card .btn{width:100%;padding:11px;font-size:13px}
+.apk-card{border-color:#43ff8370;background:linear-gradient(160deg,#14291b,#0a100c)}
+.apk-card .cover{background:radial-gradient(circle,#276c3d,#0a140e 70%)}
+.empty{display:none;text-align:center;color:var(--muted);padding:35px;border:1px dashed var(--line);border-radius:15px}
+footer{border-top:1px solid var(--line);padding:25px 20px;text-align:center;color:var(--muted);font-size:12px;line-height:1.7}
+#intro{position:fixed;inset:0;z-index:20;background:#030604;display:grid;place-items:center;transition:opacity .6s,visibility .6s}
+#intro.hide{opacity:0;visibility:hidden}
+.intro-inner{text-align:center}
+.intro-logo{width:86px;height:86px;border:3px solid var(--green);border-radius:25px;display:grid;place-items:center;margin:0 auto 18px;font-size:42px;font-weight:1000;box-shadow:0 0 45px #43ff8350;animation:pulse 1.5s infinite}
+.intro-logo span:first-child{color:var(--green)}.intro-logo span:last-child{color:#fff;margin-left:-5px}
+.intro-inner strong{font-size:25px;letter-spacing:2px}.intro-inner p{color:var(--green);font-size:10px;letter-spacing:4px}
+@keyframes pulse{50%{transform:scale(1.06);box-shadow:0 0 65px #43ff8370}}
+@media(max-width:900px){.grid{grid-template-columns:repeat(3,minmax(0,1fr))}}
+@media(max-width:650px){.grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:11px}.hero{padding:20px 14px}.hero-box{padding:25px 20px}.cover{height:125px}.card-body{padding:12px}.card h3{font-size:14px}.nav{padding:10px 14px}main{padding:0 14px 45px}.section-head{align-items:start;flex-direction:column}}
+@media(max-width:360px){.grid{grid-template-columns:1fr 1fr}.cover{height:105px}.cover b{font-size:22px}}
+</style>
+</head>
+<body>
+<div id="intro"><div class="intro-inner"><div class="intro-logo"><span>G</span><span>S</span></div><strong>GAME STORE</strong><p>YOUR GAMING HUB</p></div></div>
+<header><div class="nav"><div class="brand"><div class="logo"><span>G</span><span>S</span></div>GAME STORE</div><small>ANDROID GAMES</small></div></header>
+<section class="hero"><div class="hero-box"><span class="tag">WELCOME TO GAME STORE</span><h1>PLAY MORE.<br><em>EXPLORE MORE.</em></h1><p>Discover your games in one place. Search the collection and tap Download to open the file page and start downloading.</p><div class="actions"><a class="btn primary" href="#games">🎮 Explore Games</a><a class="btn secondary" href="https://drive.google.com/file/d/1UNTKGuV6iOZP2rqO3NUq7KD9I8IkiWgw/view?usp=drivesdk">⬇ Download Game Store APK</a></div></div></section>
+<main id="games">
+<div class="section-head"><div><h2>Game Library</h2><p>Choose a game to open its file page, check the name and size, then tap Download.</p></div></div>
+<div class="controls"><input class="search" id="search" type="search" placeholder="Search games..." aria-label="Search games"><select id="sort" aria-label="Sort games"><option value="all">All Games</option><option value="az">A to Z</option></select></div>
+<div class="grid" id="grid">
+<article class="card" data-name="GTA Vice City"><div class="cover"><b>GTA<small>VICE CITY</small></b></div><div class="card-body"><h3>GTA Vice City</h3><div class="meta">Action • Open World</div><a class="btn primary" href="https://download1584.mediafire.com/z11lzfrfndfgfuu5Z1EnC925kyNqrujKUaze5HDs7bXJge_nVCMEaeziQWlYqj6TKrrqhls0j8sI0wLdQfsZALnPztJImyVSVRFkcdkOLpTso_4disz39Z9l3vQZaGfwnuDohgikXxqgvajV2LikbDGHrAGeSDMoS9J4z_Hw4AE/x1phisb95tw581n/GTA+VC.zip" target="_blank" rel="noopener">Download</a></div></article>
+<article class="card" data-name="GTA San Andreas"><div class="cover"><b>GTA<small>SAN ANDREAS</small></b></div><div class="card-body"><h3>GTA San Andreas</h3><div class="meta">Action • Open World</div><a class="btn primary" href="https://drive.google.com/file/d/1dcHn9Fxy_Gkxs_1vMqfYu9-_CLjc3XL3/view?usp=drivesdk" target="_blank" rel="noopener">Download</a></div></article>
+<article class="card" data-name="GTA Liberty City Stories"><div class="cover"><b>GTA<small>LIBERTY CITY STORIES</small></b></div><div class="card-body"><h3>GTA Liberty City Stories</h3><div class="meta">Action • Open World</div><a class="btn primary" href="https://drive.google.com/file/d/1Gi5TD-_bK_ROMniDaIUdRFa6cGfLpbgO/view?usp=drivesdk" target="_blank" rel="noopener">Download</a></div></article>
+<article class="card" data-name="GTA III"><div class="cover"><b>GTA<small>III</small></b></div><div class="card-body"><h3>GTA III</h3><div class="meta">Action • Open World</div><a class="btn primary" href="https://drive.google.com/file/d/1u34xPxCq8FUwE3vaPNWTDLFiSkoNIq2y/view?usp=drivesdk" target="_blank" rel="noopener">Download</a></div></article>
+<article class="card" data-name="GTA IV"><div class="cover"><b>GTA<small>IV</small></b></div><div class="card-body"><h3>GTA IV</h3><div class="meta">Action • Open World</div><a class="btn primary" href="https://drive.google.com/file/d/17Ir-B5msWY1zruigsJN7qbmrVsIyYK-h/view?usp=drivesdk" target="_blank" rel="noopener">Download</a></div></article>
+<article class="card" data-name="GTA V"><div class="cover"><b>GTA<small>V</small></b></div><div class="card-body"><h3>GTA V</h3><div class="meta">Action • Open World</div><a class="btn primary" href="https://drive.google.com/file/d/1O7wD1cu7-WqhgA73Gmd11nLz8ynRrPL7/view?usp=drivesdk" target="_blank" rel="noopener">Download</a></div></article>
+<article class="card" data-name="PUBG Mobile Flash"><div class="cover"><b>PUBG<small>MOBILE FLASH</small></b></div><div class="card-body"><h3>PUBG Mobile Flash</h3><div class="meta">Battle Royale</div><a class="btn primary" href="https://drive.google.com/file/d/1V1Y2wi7iYeRc8xSobMPSLFHcJw_GRzZo/view?usp=drivesdk" target="_blank" rel="noopener">Download</a></div></article>
+<article class="card" data-name="Free Fire"><div class="cover"><b>FREE<small>FIRE</small></b></div><div class="card-body"><h3>Free Fire</h3><div class="meta">Battle Royale</div><a class="btn primary" href="https://drive.google.com/file/d/1KhC_42XMOJKyLvlGTHrE-oxf2lQWqpuw/view?usp=drivesdk" target="_blank" rel="noopener">Download</a></div></article>
+<article class="card apk-card" data-name="Game Store APK"><div class="cover"><b>G<span style="color:#fff">S</span><small>ANDROID APP</small></b></div><div class="card-body"><h3>Game Store APK</h3><div class="meta">Install the store on Android</div><a class="btn primary" href="https://drive.google.com/file/d/1UNTKGuV6iOZP2rqO3NUq7KD9I8IkiWgw/view?usp=drivesdk" target="_blank" rel="noopener">Download APK</a></div></article>
+</div>
+<div class="empty" id="empty">No games found. Try another search.</div>
+</main>
+<footer>GAME STORE · Made for gamers<br>Download availability and installation depend on the file host and your device. Only download files you have permission to use.</footer>
+<script>
+const intro=document.getElementById('intro');setTimeout(()=>intro.classList.add('hide'),1500);
+const search=document.getElementById('search'),sort=document.getElementById('sort'),grid=document.getElementById('grid'),empty=document.getElementById('empty');
+function update(){const q=search.value.trim().toLowerCase();const cards=[...grid.querySelectorAll('.card')];cards.forEach(c=>c.style.display=c.dataset.name.toLowerCase().includes(q)?'':'none');if(sort.value==='az'){cards.sort((a,b)=>a.dataset.name.localeCompare(b.dataset.name)).forEach(c=>grid.appendChild(c));}empty.style.display=cards.some(c=>c.style.display!=='none')?'none':'block';}
+search.addEventListener('input',update);sort.addEventListener('change',update);
+</script>
+</body>
+</html>
